@@ -27,10 +27,15 @@ module.exports = {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-6px)" },
         },
+        blink: {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.35" },
+        },
       },
       animation: {
         "spin-slower": "spin-slow 40s linear infinite",
         "float-soft": "float-soft 6s ease-in-out infinite",
+        blink: "blink 1.2s ease-in-out infinite",
       },
       boxShadow: {
         "glow-emerald": "0 0 80px rgba(16, 185, 129, 0.35)",

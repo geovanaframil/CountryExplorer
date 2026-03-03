@@ -1,6 +1,5 @@
 <section
   class="relative flex h-screen flex-col items-center justify-between overflow-hidden bg-[radial-gradient(circle_at_top,_#1e293b,_#020617_60%,_#000_100%)] px-6 py-6 sm:py-8 md:py-10 text-ce-text-main"
-  (mouseenter)="onGlobeInteraction()"
 >
   <!-- Glow de fundo -->
   <div class="pointer-events-none absolute inset-0">
@@ -52,17 +51,6 @@
           >
             Buscar um país
           </p>
-          <span
-            class="inline-flex items-center gap-1 rounded-full px-2 py-[3px] text-[10px]"
-            [ngClass]="uiColors.border.strongOpacity + ' ' + uiColors.background.surfaceOpacity + ' ' + uiColors.text.secondary"
-          >
-            <span
-              class="flex h-[14px] w-[14px] items-center justify-center rounded border border-slate-600/80 bg-slate-900/80 text-[9px]"
-            >
-              /
-            </span>
-            Atalho em breve
-          </span>
         </div>
 
         <div class="relative">
@@ -97,6 +85,9 @@
   <div
     class="relative z-10 flex w-full flex-1 items-center justify-center pt-4"
   >
+    <!-- Dica gamificada: setas piscando no topo; some só quando clicar/arrastar no globo e não volta mais -->
+    <app-landing-drag-hint [visible]="!hintDismissed()" />
+
     <div
       class="relative aspect-square w-full max-w-[360px] rounded-full border border-emerald-500/15 bg-gradient-to-br from-slate-700 via-slate-900 to-black shadow-glow-emerald overflow-hidden sm:max-w-[420px] lg:max-w-[520px]"
       [class.animate-spin-slower]="!isInteracting()"
@@ -121,23 +112,5 @@
     <div
       class="pointer-events-none absolute inset-x-6 bottom-10 top-auto rounded-full border border-emerald-500/10 lg:inset-x-24"
     ></div>
-
-    <!-- Dicas principais -->
-    <div
-      class="pointer-events-none absolute bottom-6 flex flex-col items-center gap-2 text-center"
-    >
-      <p
-        class="text-slate-100 uppercase tracking-wide"
-        [ngClass]="uiTypography.actions.secondary"
-      >
-        Arraste ou mova o mouse para explorar
-      </p>
-      <p
-        class="text-slate-400"
-        [ngClass]="uiTypography.body.muted"
-      >
-        Quando você se mover, a busca será ativada.
-      </p>
-    </div>
   </div>
 </section>

@@ -5,26 +5,31 @@
   <button
     type="button"
     (click)="toggle()"
-    class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-emerald-400/60 transition hover:bg-emerald-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+    class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-emerald-400/60 transition hover:bg-emerald-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 disabled:opacity-50"
     [ngClass]="uiColors.primary.subtle"
+    [disabled]="hasError()"
   >
     <span class="sr-only">
-      {{ isPlaying() ? 'Pausar som ambiente' : 'Ativar som ambiente' }}
+      {{ isPlaying() ? 'Pausar som ambiente' : 'Reproduzir som ambiente' }}
     </span>
-    <span
-      class="flex items-end gap-[2px]"
-      [class.opacity-60]="!isPlaying()"
-    >
+    @if (isPlaying()) {
+      <!-- Ícone de pausa (duas barras) -->
+      <span class="flex items-center gap-[3px]" aria-hidden="true">
+        <span class="h-4 w-[3px] rounded-sm bg-emerald-300"></span>
+        <span class="h-4 w-[3px] rounded-sm bg-emerald-300"></span>
+      </span>
+    } @else {
+      <!-- Ícone de play (barras de equalizer) -->
       <span
-        class="h-3 w-[2px] rounded-full bg-emerald-300"
-      ></span>
-      <span
-        class="h-5 w-[2px] rounded-full bg-emerald-300/80"
-      ></span>
-      <span
-        class="h-4 w-[2px] rounded-full bg-emerald-300/60"
-      ></span>
-    </span>
+        class="flex items-end gap-[2px]"
+        [class.opacity-70]="!isPlaying()"
+        aria-hidden="true"
+      >
+        <span class="h-3 w-[2px] rounded-full bg-emerald-300"></span>
+        <span class="h-5 w-[2px] rounded-full bg-emerald-300/80"></span>
+        <span class="h-4 w-[2px] rounded-full bg-emerald-300/60"></span>
+      </span>
+    }
   </button>
 
   <div class="flex flex-1 flex-col">
@@ -39,15 +44,17 @@
       class="mt-1 text-[11px]"
       [ngClass]="uiColors.semantic.warning.text"
     >
-      Não foi possível reproduzir o áudio automaticamente. Verifique o arquivo
-      em <code class="rounded px-1 py-[1px] text-[10px]" [ngClass]="uiColors.background.surfaceOpacity">assets/audio/ambient.mp3</code>.
+      Não foi possível reproduzir. Coloque o arquivo
+      <code class="rounded px-1 py-[1px] text-[10px]" [ngClass]="uiColors.background.surfaceOpacity">ambient.mp3</code>
+      em <code class="rounded px-1 py-[1px] text-[10px]" [ngClass]="uiColors.background.surfaceOpacity">public/assets/audio/</code>.
     </p>
   </div>
 
   <audio
     #audioRef
-    src="assets/audio/ambient.mp3"
+    src="/assets/audio/ambient.mp3"
     loop
+    preload="metadata"
   ></audio>
 </div>
 
