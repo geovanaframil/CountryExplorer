@@ -1,1 +1,53 @@
-<p>country-detail works!</p>
+<div class="min-h-[60vh] flex items-center justify-center bg-slate-50">
+  <div class="w-full max-w-3xl rounded-2xl bg-white shadow-md border border-slate-200 p-8">
+    <div class="mb-6 flex items-center justify-between gap-4">
+      <h1 class="text-2xl font-bold tracking-tight text-slate-900">Country Detail</h1>
+
+      <button
+        type="button"
+        class="inline-flex items-center rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
+      >
+        Voltar
+      </button>
+    </div>
+
+    <div class="grid gap-6 md:grid-cols-[1.3fr,auto] items-start">
+      <!-- Coluna principal -->
+      <div class="space-y-4">
+        <h2 class="text-xl font-semibold text-slate-900">Nome do país</h2>
+
+        <dl class="grid grid-cols-1 gap-3 text-sm text-slate-700 sm:grid-cols-2">
+          <div class="space-y-1">
+            <dt class="font-medium text-slate-500">Capital</dt>
+            <dd>Exemplo City</dd>
+          </div>
+          <div class="space-y-1">
+            <dt class="font-medium text-slate-500">Região</dt>
+            <dd>Europa</dd>
+          </div>
+          <div class="space-y-1">
+            <dt class="font-medium text-slate-500">População</dt>
+            <dd>10,5M</dd>
+          </div>
+          <div class="space-y-1">
+            <dt class="font-medium text-slate-500">Moeda</dt>
+            <dd>Euro (EUR)</dd>
+          </div>
+        </dl>
+      </div>
+
+      <!-- Card lateral (ex: bandeira) -->
+      <div class="mt-4 md:mt-0">
+        <div class="overflow-hidden rounded-xl border border-slate-200 bg-slate-100">
+          <div
+            class="aspect-video bg-gradient-to-br from-slate-200 to-slate-300 flex items-center justify-center"
+          >
+            <span class="text-xs font-medium uppercase tracking-[0.2em] text-slate-500">
+              Bandeira
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

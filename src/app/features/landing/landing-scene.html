@@ -1,0 +1,119 @@
+<section
+  class="relative flex h-screen flex-col items-center justify-between overflow-hidden bg-[radial-gradient(circle_at_top,_#1e293b,_#020617_60%,_#000_100%)] px-6 py-6 sm:py-8 md:py-10 text-ce-text-main"
+  (mouseenter)="onGlobeInteraction()"
+>
+  <!-- Glow de fundo -->
+  <div class="pointer-events-none absolute inset-0">
+    <div
+      class="absolute -top-40 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-emerald-500/20 blur-3xl"
+    ></div>
+  </div>
+
+  <!-- Painel imersivo (topo, full-width) -->
+  <aside
+    class="relative z-10 mb-4 flex w-full max-w-3xl flex-col gap-4 rounded-2xl border border-slate-800/80 bg-slate-900/60 p-6 shadow-[0_18px_60px_rgba(15,23,42,0.85)] backdrop-blur-md"
+  >
+      <!-- Título / texto -->
+      <div class="space-y-2">
+        <p
+          class="text-xs font-semibold uppercase tracking-[0.25em] text-emerald-400/80"
+        >
+          Modo imersivo
+        </p>
+        <h1 class="text-2xl font-semibold text-slate-50 sm:text-3xl">
+          Viaje pelo mundo sem sair da sua cadeira.
+        </h1>
+        <p class="text-sm text-slate-400">
+          Explore países como se estivesse em um jogo: navegue pelo globo,
+          descubra detalhes e encontre seu próximo destino favorito.
+        </p>
+      </div>
+
+      <!-- Som ambiente -->
+      <app-landing-ambient-audio></app-landing-ambient-audio>
+
+      <!-- Busca (aparece quando há interação) -->
+      <div
+        class="mt-1 space-y-3 rounded-xl border border-slate-800/80 bg-slate-900/70 px-4 py-4 transition-all duration-500"
+        [class.opacity-60]="!isInteracting()"
+        [class.opacity-100]="isInteracting()"
+      >
+        <div class="flex items-center justify-between gap-2">
+          <p class="text-xs font-medium text-slate-300">
+            Buscar um país
+          </p>
+          <span
+            class="inline-flex items-center gap-1 rounded-full border border-slate-700/80 bg-slate-900/80 px-2 py-[3px] text-[10px] text-slate-400"
+          >
+            <span
+              class="flex h-[14px] w-[14px] items-center justify-center rounded border border-slate-600/80 bg-slate-900/80 text-[9px]"
+            >
+              /
+            </span>
+            Atalho em breve
+          </span>
+        </div>
+
+        <div class="relative">
+          <input
+            type="search"
+            placeholder="Digite o nome de um país..."
+            class="w-full rounded-lg border border-slate-800 bg-slate-900/80 px-3 py-2.5 text-sm text-slate-100 shadow-inner shadow-black/40 outline-none placeholder:text-slate-500 focus:border-emerald-400/70 focus:ring-2 focus:ring-emerald-500/40 disabled:cursor-not-allowed"
+            [disabled]="!isInteracting()"
+          />
+
+          <div class="pointer-events-none absolute inset-y-0 right-3 flex items-center">
+            <span class="text-xs text-slate-500">Enter</span>
+          </div>
+        </div>
+
+        <p class="text-[11px] text-slate-500" *ngIf="!isInteracting()">
+          Mova o mouse ou toque no globo para ativar a busca.
+        </p>
+        <p class="text-[11px] text-slate-500" *ngIf="isInteracting()">
+          Buscas reais virão na próxima etapa, quando conectarmos a API.
+        </p>
+      </div>
+    </aside>
+
+  <!-- Globo central -->
+  <div
+    class="relative z-10 flex w-full flex-1 items-center justify-center pt-4"
+  >
+    <div
+      class="relative aspect-square w-full max-w-[360px] rounded-full border border-emerald-500/15 bg-gradient-to-br from-slate-700 via-slate-900 to-black shadow-glow-emerald overflow-hidden sm:max-w-[420px] lg:max-w-[520px]"
+      [class.animate-spin-slower]="!isInteracting()"
+    >
+      <!-- Globo 3D real -->
+      <app-landing-globe-3d
+        class="h-full w-full"
+        [interacting]="isInteracting()"
+      ></app-landing-globe-3d>
+
+      <!-- Atmosfera / tints -->
+      <div
+        class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(34,197,94,0.25),transparent_55%),radial-gradient(circle_at_70%_60%,rgba(45,212,191,0.18),transparent_55%)] mix-blend-screen"
+      ></div>
+      <div
+        class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-white/5 mix-blend-soft-light"
+      ></div>
+    </div>
+
+    <!-- Anel em órbita -->
+    <div
+      class="pointer-events-none absolute inset-x-6 bottom-10 top-auto rounded-full border border-emerald-500/10 lg:inset-x-24"
+    ></div>
+
+    <!-- Dicas principais -->
+    <div
+      class="pointer-events-none absolute bottom-6 flex flex-col items-center gap-2 text-center"
+    >
+      <p class="text-sm font-medium tracking-wide text-slate-100 uppercase">
+        Arraste ou mova o mouse para explorar
+      </p>
+      <p class="text-xs text-slate-400">
+        Quando você se mover, a busca será ativada.
+      </p>
+    </div>
+  </div>
+</section>

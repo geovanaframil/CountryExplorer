@@ -1,0 +1,50 @@
+<div
+  class="flex items-center gap-3 rounded-xl border border-emerald-500/20 bg-gradient-to-r from-emerald-500/10 to-emerald-500/0 px-3 py-3"
+>
+  <button
+    type="button"
+    (click)="toggle()"
+    class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-emerald-400/60 bg-emerald-500/10 text-emerald-300 transition hover:bg-emerald-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+  >
+    <span class="sr-only">
+      {{ isPlaying() ? 'Pausar som ambiente' : 'Ativar som ambiente' }}
+    </span>
+    <span
+      class="flex items-end gap-[2px]"
+      [class.opacity-60]="!isPlaying()"
+    >
+      <span
+        class="h-3 w-[2px] rounded-full bg-emerald-300"
+      ></span>
+      <span
+        class="h-5 w-[2px] rounded-full bg-emerald-300/80"
+      ></span>
+      <span
+        class="h-4 w-[2px] rounded-full bg-emerald-300/60"
+      ></span>
+    </span>
+  </button>
+
+  <div class="flex flex-1 flex-col">
+    <p class="text-xs font-medium text-emerald-200">
+      Som ambiente {{ isPlaying() ? 'ativado' : 'disponível' }}
+    </p>
+    <p class="text-[11px] text-emerald-100/80">
+      Use fones para uma experiência mais imersiva.
+    </p>
+    <p
+      *ngIf="hasError()"
+      class="mt-1 text-[11px] text-amber-300/90"
+    >
+      Não foi possível reproduzir o áudio automaticamente. Verifique o arquivo
+      em <code class="rounded bg-slate-900/80 px-1 py-[1px] text-[10px]">assets/audio/ambient.mp3</code>.
+    </p>
+  </div>
+
+  <audio
+    #audioRef
+    src="assets/audio/ambient.mp3"
+    loop
+  ></audio>
+</div>
+
