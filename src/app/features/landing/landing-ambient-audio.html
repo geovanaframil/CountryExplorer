@@ -1,10 +1,12 @@
 <div
-  class="flex items-center gap-3 rounded-xl border border-emerald-500/20 bg-gradient-to-r from-emerald-500/10 to-emerald-500/0 px-3 py-3"
+  class="flex items-center gap-3 rounded-xl border px-3 py-3 bg-gradient-to-r from-emerald-500/10 to-emerald-500/0"
+  [ngClass]="uiColors.primary.borderOpacity"
 >
   <button
     type="button"
     (click)="toggle()"
-    class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-emerald-400/60 bg-emerald-500/10 text-emerald-300 transition hover:bg-emerald-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+    class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-emerald-400/60 transition hover:bg-emerald-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+    [ngClass]="uiColors.primary.subtle"
   >
     <span class="sr-only">
       {{ isPlaying() ? 'Pausar som ambiente' : 'Ativar som ambiente' }}
@@ -29,15 +31,16 @@
     <p class="text-xs font-medium text-emerald-200">
       Som ambiente {{ isPlaying() ? 'ativado' : 'disponível' }}
     </p>
-    <p class="text-[11px] text-emerald-100/80">
+    <p class="text-[11px] text-emerald-100/80 leading-relaxed">
       Use fones para uma experiência mais imersiva.
     </p>
     <p
       *ngIf="hasError()"
-      class="mt-1 text-[11px] text-amber-300/90"
+      class="mt-1 text-[11px]"
+      [ngClass]="uiColors.semantic.warning.text"
     >
       Não foi possível reproduzir o áudio automaticamente. Verifique o arquivo
-      em <code class="rounded bg-slate-900/80 px-1 py-[1px] text-[10px]">assets/audio/ambient.mp3</code>.
+      em <code class="rounded px-1 py-[1px] text-[10px]" [ngClass]="uiColors.background.surfaceOpacity">assets/audio/ambient.mp3</code>.
     </p>
   </div>
 

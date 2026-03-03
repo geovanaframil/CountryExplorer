@@ -11,7 +11,8 @@
 
   <!-- Painel imersivo (topo, full-width) -->
   <aside
-    class="relative z-10 mb-4 flex w-full max-w-3xl flex-col gap-4 rounded-2xl border border-slate-800/80 bg-slate-900/60 p-6 shadow-[0_18px_60px_rgba(15,23,42,0.85)] backdrop-blur-md"
+    class="relative z-10 mb-4 flex w-full max-w-3xl flex-col gap-4 rounded-2xl border p-6 shadow-[0_18px_60px_rgba(15,23,42,0.85)] backdrop-blur-md"
+    [ngClass]="uiColors.border.subtleOpacity + ' ' + uiColors.background.surfaceElevated"
   >
       <!-- Título / texto -->
       <div class="space-y-2">
@@ -20,10 +21,15 @@
         >
           Modo imersivo
         </p>
-        <h1 class="text-2xl font-semibold text-slate-50 sm:text-3xl">
+        <h1
+          class="text-slate-50 sm:text-3xl"
+          [ngClass]="uiTypography.heading.h1"
+        >
           Viaje pelo mundo sem sair da sua cadeira.
         </h1>
-        <p class="text-sm text-slate-400">
+        <p
+          [ngClass]="uiTypography.body.base + ' ' + uiColors.text.secondary"
+        >
           Explore países como se estivesse em um jogo: navegue pelo globo,
           descubra detalhes e encontre seu próximo destino favorito.
         </p>
@@ -34,16 +40,21 @@
 
       <!-- Busca (aparece quando há interação) -->
       <div
-        class="mt-1 space-y-3 rounded-xl border border-slate-800/80 bg-slate-900/70 px-4 py-4 transition-all duration-500"
+        class="mt-1 space-y-3 rounded-xl px-4 py-4 transition-all duration-500"
+        [ngClass]="uiColors.border.subtleOpacity + ' bg-slate-900/70'"
         [class.opacity-60]="!isInteracting()"
         [class.opacity-100]="isInteracting()"
       >
         <div class="flex items-center justify-between gap-2">
-          <p class="text-xs font-medium text-slate-300">
+          <p
+            class="text-slate-300"
+            [ngClass]="uiTypography.body.muted"
+          >
             Buscar um país
           </p>
           <span
-            class="inline-flex items-center gap-1 rounded-full border border-slate-700/80 bg-slate-900/80 px-2 py-[3px] text-[10px] text-slate-400"
+            class="inline-flex items-center gap-1 rounded-full px-2 py-[3px] text-[10px]"
+            [ngClass]="uiColors.border.strongOpacity + ' ' + uiColors.background.surfaceOpacity + ' ' + uiColors.text.secondary"
           >
             <span
               class="flex h-[14px] w-[14px] items-center justify-center rounded border border-slate-600/80 bg-slate-900/80 text-[9px]"
@@ -67,10 +78,16 @@
           </div>
         </div>
 
-        <p class="text-[11px] text-slate-500" *ngIf="!isInteracting()">
+        <p
+          class="text-[11px] text-slate-500"
+          *ngIf="!isInteracting()"
+        >
           Mova o mouse ou toque no globo para ativar a busca.
         </p>
-        <p class="text-[11px] text-slate-500" *ngIf="isInteracting()">
+        <p
+          class="text-[11px] text-slate-500"
+          *ngIf="isInteracting()"
+        >
           Buscas reais virão na próxima etapa, quando conectarmos a API.
         </p>
       </div>
@@ -108,10 +125,16 @@
     <div
       class="pointer-events-none absolute bottom-6 flex flex-col items-center gap-2 text-center"
     >
-      <p class="text-sm font-medium tracking-wide text-slate-100 uppercase">
+      <p
+        class="text-slate-100 uppercase tracking-wide"
+        [ngClass]="uiTypography.actions.secondary"
+      >
         Arraste ou mova o mouse para explorar
       </p>
-      <p class="text-xs text-slate-400">
+      <p
+        class="text-slate-400"
+        [ngClass]="uiTypography.body.muted"
+      >
         Quando você se mover, a busca será ativada.
       </p>
     </div>
