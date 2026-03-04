@@ -24,7 +24,7 @@
         ' bg-slate-900/95'
       "
     >
-      <!-- Cabeçalho com título e botão X -->
+      <!-- Cabeçalho: título + Voltar (opcional) + Fechar -->
       <div
         class="flex items-center justify-between gap-4 shrink-0 px-6 py-4 border-b"
         [ngClass]="uiColors.border.subtleOpacity"
@@ -34,18 +34,33 @@
             {{ title() }}
           </h2>
         }
-        <button
-          type="button"
-          class="modal-close-btn ml-auto flex h-10 w-10 items-center justify-center rounded-xl border transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
-          [ngClass]="
-            uiColors.border.subtleOpacity +
-            ' text-slate-400 hover:text-slate-100 hover:border-emerald-500/40 hover:scale-110'
-          "
-          [attr.aria-label]="'Fechar'"
-          (click)="close()"
-        >
-          <span class="text-xl leading-none" aria-hidden="true">×</span>
-        </button>
+        <div class="flex items-center gap-2 ml-auto">
+          @if (showBackButton()) {
+            <button
+              type="button"
+              class="modal-back-btn flex h-10 items-center justify-center gap-1.5 rounded-xl border px-4 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 text-sm font-semibold"
+              [ngClass]="
+                'border-emerald-500/50 text-emerald-300 hover:bg-emerald-500/20 hover:text-emerald-200 hover:border-emerald-400/60 hover:scale-105'
+              "
+              [attr.aria-label]="'Voltar'"
+              (click)="backClicked.emit()"
+            >
+              Voltar
+            </button>
+          }
+          <button
+            type="button"
+            class="modal-close-btn flex h-10 w-10 items-center justify-center rounded-xl border transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+            [ngClass]="
+              uiColors.border.subtleOpacity +
+              ' text-slate-400 hover:text-slate-100 hover:border-slate-500 hover:scale-110'
+            "
+            [attr.aria-label]="'Fechar'"
+            (click)="close()"
+          >
+            <span class="text-xl leading-none" aria-hidden="true">×</span>
+          </button>
+        </div>
       </div>
 
       <!-- Conteúdo: overflow-hidden para que o scroll fique no conteúdo interno -->

@@ -5,11 +5,11 @@ import {
   OnDestroy,
   signal,
   computed,
+  output,
   ElementRef,
   viewChild,
   effect,
 } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { Subject, Subscription, debounceTime, distinctUntilChanged } from 'rxjs';
 import { uiTypography } from '../../ui/typography';
 import { uiColors } from '../../ui/colors';
@@ -24,7 +24,7 @@ const CHUNK_SIZE = 24;
 @Component({
   selector: 'app-country-list-modal-content',
   standalone: true,
-  imports: [CommonModule, RouterLink, DropdownComponent],
+  imports: [CommonModule, DropdownComponent],
   templateUrl: './country-list-modal-content.html',
   styleUrl: './country-list-modal-content.scss',
 })
@@ -32,6 +32,8 @@ export class CountryListModalContent implements OnInit, OnDestroy {
   protected readonly uiTypography = uiTypography;
   protected readonly uiColors = uiColors;
   protected readonly REGIONS = REGIONS;
+  readonly countrySelected = output<string>();
+
   protected readonly regionOptions: DropdownOption[] = [
     { value: '', label: 'Todas as regiões' },
     ...REGIONS.map((r) => ({ value: r, label: r })),
@@ -142,6 +144,10 @@ export class CountryListModalContent implements OnInit, OnDestroy {
 
   onCountryCardMouseEnter(): void {
     this.clickSound.playToc();
+  }
+
+  selectCountry(code: string): void {
+    this.countrySelected.emit(code);
   }
 
   loadAll(): void {

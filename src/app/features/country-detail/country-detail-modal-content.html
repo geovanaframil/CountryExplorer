@@ -1,0 +1,101 @@
+<div class="flex flex-col h-full min-h-0 overflow-hidden">
+  <div class="flex-1 overflow-y-auto px-6 py-4 min-h-0">
+    @if (loading()) {
+      <p [ngClass]="uiTypography.body.base + ' ' + uiColors.text.secondary">
+        Carregando…
+      </p>
+    }
+
+    @if (hasError() && !loading()) {
+      <p class="text-rose-300" [ngClass]="uiTypography.body.base">
+        {{ error() }}
+      </p>
+    }
+
+    @if (hasCountry() && !loading()) {
+      @let c = country()!;
+      <!-- Título gamificado: "Você descobriu" -->
+      <p class="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-400/90 mb-1">
+        Você descobriu
+      </p>
+      <h2
+        class="text-xl font-semibold tracking-tight text-slate-100 mb-6"
+      >
+        {{ c.name.official }}
+      </h2>
+
+      <div class="grid gap-6 md:grid-cols-[1.2fr,auto] items-start">
+        <!-- Cards de informação (visual gamificado) -->
+        <div class="space-y-3">
+          <div
+            class="detail-card rounded-xl border p-4 transition-all duration-200"
+            [ngClass]="uiColors.border.subtleOpacity + ' bg-slate-800/50 hover:bg-slate-800/70 hover:border-emerald-500/20'"
+          >
+            <dl class="grid grid-cols-1 gap-3 sm:grid-cols-2 text-sm">
+              <div class="space-y-0.5">
+                <dt class="text-slate-500 font-medium">Capital</dt>
+                <dd class="text-slate-200">{{ c.capital?.[0] ?? '—' }}</dd>
+              </div>
+              <div class="space-y-0.5">
+                <dt class="text-slate-500 font-medium">Região</dt>
+                <dd class="text-slate-200">{{ c.region }}</dd>
+              </div>
+              @if (c.subregion) {
+                <div class="space-y-0.5">
+                  <dt class="text-slate-500 font-medium">Sub-região</dt>
+                  <dd class="text-slate-200">{{ c.subregion }}</dd>
+                </div>
+              }
+              <div class="space-y-0.5">
+                <dt class="text-slate-500 font-medium">População</dt>
+                <dd class="text-slate-200">{{ c.population | number }}</dd>
+              </div>
+              <div class="space-y-0.5">
+                <dt class="text-slate-500 font-medium">Moeda(s)</dt>
+                <dd class="text-slate-200">{{ formatCurrencies(c.currencies) }}</dd>
+              </div>
+              <div class="space-y-0.5">
+                <dt class="text-slate-500 font-medium">Idioma(s)</dt>
+                <dd class="text-slate-200">{{ formatLanguages(c.languages) }}</dd>
+              </div>
+              @if (c.borders && c.borders.length > 0) {
+                <div class="space-y-0.5 sm:col-span-2">
+                  <dt class="text-slate-500 font-medium">Fronteiras</dt>
+                  <dd class="text-slate-200">{{ c.borders.join(', ') }}</dd>
+                </div>
+              }
+              @if (c.area != null) {
+                <div class="space-y-0.5">
+                  <dt class="text-slate-500 font-medium">Área</dt>
+                  <dd class="text-slate-200">{{ c.area | number }} km²</dd>
+                </div>
+              }
+            </dl>
+          </div>
+        </div>
+
+        <!-- Bandeira com moldura gamificada -->
+        <div class="detail-flag-wrap">
+          <div
+            class="overflow-hidden rounded-xl border-2 shadow-[0_0_24px_rgba(34,197,94,0.12)] transition-all duration-200 hover:shadow-[0_0_32px_rgba(34,197,94,0.18)]"
+            [ngClass]="'border-emerald-500/30 bg-slate-800/50'"
+          >
+            @if (c.flags.png) {
+              <img
+                [src]="c.flags.png"
+                [alt]="c.flags.alt ?? c.name.common"
+                class="aspect-video w-full object-cover block"
+              />
+            } @else {
+              <div
+                class="aspect-video w-full min-w-[200px] flex items-center justify-center bg-slate-800"
+              >
+                <span class="text-xs uppercase tracking-wider text-slate-500">Bandeira</span>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>

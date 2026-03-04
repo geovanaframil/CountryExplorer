@@ -27,8 +27,11 @@ export class ModalComponent implements AfterViewInit {
   readonly isOpen = input<boolean>(false);
   /** Título exibido no cabeçalho (para acessibilidade e visual) */
   readonly title = input<string>('');
+  /** Exibe botão "Voltar" no cabeçalho (estilo emerald, para voltar ao contexto anterior) */
+  readonly showBackButton = input<boolean>(false);
 
   readonly closed = output<void>();
+  readonly backClicked = output<void>();
 
   protected readonly dialogRef = viewChild<ElementRef<HTMLDivElement>>('dialog');
 

@@ -81,12 +81,30 @@
     ></div>
   </div>
 
-  <!-- Modal: lista de países com lazy loading -->
-  <app-ui-modal
-    [isOpen]="showCountriesModal()"
-    title="Explorar países"
-    (closed)="showCountriesModal.set(false)"
-  >
-    <app-country-list-modal-content />
-  </app-ui-modal>
+  <!-- Modal: lista de países -->
+  @if (showCountriesModal() && !showDetailModal()) {
+    <app-ui-modal
+      [isOpen]="true"
+      title="Explorar países"
+      (closed)="showCountriesModal.set(false)"
+    >
+      <app-country-list-modal-content (countrySelected)="onCountrySelected($any($event))" />
+    </app-ui-modal>
+  }
+
+  <!-- Modal: detalhe do país (Voltar = volta para lista, X = volta para a landing) -->
+  @if (showDetailModal()) {
+    <app-ui-modal
+      [isOpen]="true"
+      [title]="detailModalTitle()"
+      [showBackButton]="true"
+      (backClicked)="onDetailBack()"
+      (closed)="onDetailClosed()"
+    >
+      <app-country-detail-modal-content
+        [code]="selectedCountryCode()"
+        (titleChange)="detailModalTitle.set($event)"
+      />
+    </app-ui-modal>
+  }
 </section>
