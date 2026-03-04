@@ -1,59 +1,72 @@
-# CountryExplorer
+## 🌍 CountryExplorer
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.0.
 
-## Development server
 
-To start a local development server, run:
+## 🔗 Live Demo
 
-```bash
+Acesse o projeto online:
+
+https://country-explorer-weld.vercel.app/
+
+
+## 🚀 Como rodar o repositório localmente:
+
+1- Clone o repositório:
+
+git clone https://github.com/seu-usuario/country-explorer.git
+
+2- Acesse a pasta do projeto
+
+cd country-explorer
+
+3- Instale as dependencias do projeto
+
+npm install
+
+4- Rode o projeto
+
 ng serve
-```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+5- Abra no navegador
 
-## Code scaffolding
+http://localhost:4200
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
 
-```bash
-ng generate component component-name
-```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## 🌐 API Utilizada
 
-```bash
-ng generate --help
-```
+Este projeto utiliza a API pública REST Countries para obter informações sobre países.
+https://restcountries.com/
 
-## Building
 
-To build the project run:
 
-```bash
-ng build
-```
+## 🧠 Decisões Técnicas
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Durante o desenvolvimento, algumas escolhas foram feitas pensando em produtividade, organização do código e simplicidade de manutenção.
 
-## Running unit tests
+Angular
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+O Angular foi utilizado por oferecer uma estrutura robusta para aplicações front-end, com organização clara entre componentes, serviços e módulos.
 
-```bash
-ng test
-```
+TypeScript
 
-## Running end-to-end tests
+O TypeScript foi utilizado para garantir tipagem estática, melhor organização do código e maior previsibilidade no desenvolvimento.
+Isso facilita a manutenção e reduz erros durante a implementação.
 
-For end-to-end (e2e) testing, run:
+TailwindCSS
 
-```bash
-ng e2e
-```
+O TailwindCSS foi escolhido por sua simplicidade e agilidade na estilização da interface.
+Ele permite construir layouts rapidamente utilizando classes utilitárias, reduzindo a necessidade de criar muitos arquivos CSS e facilitando ajustes visuais.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
-## Additional Resources
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## 💡 Melhorias futuras
+
+Com mais tempo disponível, algumas funcionalidades poderiam ser implementadas:
+
+- Interação direta com o globo para seleção de países
+- Zoom em regiões específicas do mapa
+- Filtros por continente, população ou idioma
+- Melhor suporte para dispositivos móveis
+
+
