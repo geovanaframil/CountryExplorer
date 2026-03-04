@@ -3,20 +3,33 @@ import { Component, HostListener, signal } from '@angular/core';
 import { LandingGlobe3d } from './landing-globe-3d';
 import { LandingAmbientAudio } from './landing-ambient-audio';
 import { LandingDragHint } from './landing-drag-hint';
+import { ButtonComponent } from '../../ui/button/button.component';
+import { ModalComponent } from '../../ui/modal/modal.component';
+import { CountryListModalContent } from '../country-list/country-list-modal-content';
 import { uiTypography } from '../../ui/typography';
 import { uiColors } from '../../ui/colors';
 
 @Component({
   selector: 'app-landing-scene',
   standalone: true,
-  imports: [CommonModule, LandingGlobe3d, LandingAmbientAudio, LandingDragHint],
+  imports: [
+    CommonModule,
+    LandingGlobe3d,
+    LandingAmbientAudio,
+    LandingDragHint,
+    ButtonComponent,
+    ModalComponent,
+    CountryListModalContent,
+  ],
   templateUrl: './landing-scene.html',
   styleUrl: './landing-scene.scss',
 })
 export class LandingScene {
   readonly isInteracting = signal(false);
-  /** Só vira true quando o usuário clica/arrasta no globo; a dica some só então e não volta mais. */
+  /** Só vira true quando o usuário clica/arrasta no globo; a dica some e não volta mais. */
   readonly hintDismissed = signal(false);
+  /** Controla abertura do modal de lista de países */
+  readonly showCountriesModal = signal(false);
 
   // Tokens de design
   protected readonly uiTypography = uiTypography;
@@ -34,7 +47,7 @@ export class LandingScene {
     this.setInteracting();
   }
 
-  /** Chamado quando o usuário interage com o globo (clique ou arraste no canvas). */
+  /** Chamado quando o usuário interage com o globo. */
   onGlobeInteraction(): void {
     this.setInteracting();
     this.hintDismissed.set(true);

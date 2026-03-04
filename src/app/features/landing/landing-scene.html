@@ -37,47 +37,14 @@
       <!-- Som ambiente -->
       <app-landing-ambient-audio></app-landing-ambient-audio>
 
-      <!-- Busca (aparece quando há interação) -->
-      <div
-        class="mt-1 space-y-3 rounded-xl px-4 py-4 transition-all duration-500"
-        [ngClass]="uiColors.border.subtleOpacity + ' bg-slate-900/70'"
-        [class.opacity-60]="!isInteracting()"
-        [class.opacity-100]="isInteracting()"
-      >
-        <div class="flex items-center justify-between gap-2">
-          <p
-            class="text-slate-300"
-            [ngClass]="uiTypography.body.muted"
-          >
-            Buscar um país
-          </p>
-        </div>
-
-        <div class="relative">
-          <input
-            type="search"
-            placeholder="Digite o nome de um país..."
-            class="w-full rounded-lg border border-slate-800 bg-slate-900/80 px-3 py-2.5 text-sm text-slate-100 shadow-inner shadow-black/40 outline-none placeholder:text-slate-500 focus:border-emerald-400/70 focus:ring-2 focus:ring-emerald-500/40 disabled:cursor-not-allowed"
-            [disabled]="!isInteracting()"
-          />
-
-          <div class="pointer-events-none absolute inset-y-0 right-3 flex items-center">
-            <span class="text-xs text-slate-500">Enter</span>
-          </div>
-        </div>
-
-        <p
-          class="text-[11px] text-slate-500"
-          *ngIf="!isInteracting()"
+      <!-- Botão listar países (abre modal) -->
+      <div class="flex flex-wrap gap-3">
+        <app-ui-button
+          variant="primary"
+          (clicked)="showCountriesModal.set(true)"
         >
-          Mova o mouse ou toque no globo para ativar a busca.
-        </p>
-        <p
-          class="text-[11px] text-slate-500"
-          *ngIf="isInteracting()"
-        >
-          Buscas reais virão na próxima etapa, quando conectarmos a API.
-        </p>
+          LISTAR PAÍSES
+        </app-ui-button>
       </div>
     </aside>
 
@@ -99,7 +66,7 @@
         (globeInteract)="onGlobeInteraction()"
       ></app-landing-globe-3d>
 
-      <!-- Atmosfera / tints -->
+      <!-- Atmosfera -->
       <div
         class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(34,197,94,0.25),transparent_55%),radial-gradient(circle_at_70%_60%,rgba(45,212,191,0.18),transparent_55%)] mix-blend-screen"
       ></div>
@@ -113,4 +80,13 @@
       class="pointer-events-none absolute inset-x-6 bottom-10 top-auto rounded-full border border-emerald-500/10 lg:inset-x-24"
     ></div>
   </div>
+
+  <!-- Modal: lista de países com lazy loading -->
+  <app-ui-modal
+    [isOpen]="showCountriesModal()"
+    title="Explorar países"
+    (closed)="showCountriesModal.set(false)"
+  >
+    <app-country-list-modal-content />
+  </app-ui-modal>
 </section>

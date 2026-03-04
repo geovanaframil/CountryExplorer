@@ -1,0 +1,54 @@
+<div class="relative inline-block">
+  <button
+    #trigger
+    type="button"
+    class="dropdown-trigger flex items-center justify-between gap-3 rounded-xl border py-2 pl-4 pr-12 min-w-[200px] text-left text-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/40"
+    [ngClass]="
+      uiColors.border.subtleOpacity +
+      ' bg-slate-800/80 text-slate-100 hover:border-emerald-500/30 ' +
+      (open() ? 'border-emerald-500/40 ring-1 ring-emerald-500/20' : '')
+    "
+    [attr.aria-expanded]="open()"
+    [attr.aria-haspopup]="'listbox'"
+    aria-label="Selecionar região"
+    (click)="toggle()"
+  >
+    <span class="truncate">{{ selectedLabel }}</span>
+    <span
+      class="dropdown-arrow pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 transition-transform duration-200"
+      [class.rotate-180]="open()"
+      aria-hidden="true"
+    >
+      <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+      </svg>
+    </span>
+  </button>
+
+  @if (open()) {
+    <div
+      role="listbox"
+      class="dropdown-panel absolute left-0 right-0 top-full z-50 mt-1 max-h-60 overflow-y-auto rounded-xl border py-1 shadow-xl"
+      [ngClass]="
+        uiColors.border.subtleOpacity + ' bg-slate-800/95 backdrop-blur-sm'
+      "
+    >
+      @for (opt of options(); track opt.value) {
+        <button
+          type="button"
+          role="option"
+          [attr.aria-selected]="value() === opt.value"
+          class="dropdown-option w-full px-4 py-2.5 text-left text-sm transition-colors duration-150"
+          [ngClass]="
+            value() === opt.value
+              ? 'bg-emerald-500/20 text-emerald-200'
+              : 'text-slate-200 hover:bg-slate-700/80 hover:text-slate-50'
+          "
+          (click)="select(opt)"
+        >
+          {{ opt.label }}
+        </button>
+      }
+    </div>
+  }
+</div>

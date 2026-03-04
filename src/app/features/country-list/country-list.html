@@ -1,3 +1,71 @@
-<p [ngClass]="uiTypography.body.base + ' ' + uiColors.text.secondary">
-  country-list works!
-</p>
+<div class="p-6 space-y-4" [ngClass]="uiColors.background.appShell">
+  <p [ngClass]="uiTypography.body.base + ' ' + uiColors.text.secondary">
+    Lista de países (API integrada). Busca em tempo real e filtro por região.
+  </p>
+
+  <!-- Controles: busca + região -->
+  <div class="flex flex-wrap gap-3 items-center">
+    <input
+      type="search"
+      placeholder="Buscar por nome..."
+      class="rounded-lg border px-3 py-2 min-w-[200px]"
+      [ngClass]="uiColors.border.subtleLight + ' ' + uiColors.text.primary"
+      [value]="searchTerm()"
+      (input)="onSearchInput($any($event.target).value)"
+    />
+    <select
+      class="rounded-lg border px-3 py-2"
+      [ngClass]="uiColors.border.subtleLight + ' ' + uiColors.text.primary"
+      [value]="regionFilter()"
+      (change)="onRegionChange($any($event.target).value)"
+    >
+      <option value="">Todas as regiões</option>
+      @for (r of REGIONS; track r) {
+        <option [value]="r">{{ r }}</option>
+      }
+    </select>
+  </div>
+
+  <!-- Loading -->
+  @if (loading()) {
+    <p [ngClass]="uiTypography.body.base + ' ' + uiColors.text.secondary">
+      Carregando…
+    </p>
+  }
+
+  <!-- Erro -->
+  @if (hasError()) {
+    <p class="text-red-600" [ngClass]="uiTypography.body.base">
+      {{ error() }}
+    </p>
+  }
+
+  <!-- Lista vazia (sem loading, sem erro) -->
+  @if (isEmpty()) {
+    <p [ngClass]="uiTypography.body.base + ' ' + uiColors.text.secondary">
+      Nenhum país encontrado.
+    </p>
+  }
+
+  <!-- Lista de países -->
+  @if (!loading() && !error() && countries().length > 0) {
+    <ul class="space-y-2 list-none pl-0">
+      @for (c of countries(); track c.cca3) {
+        <li>
+          <a
+            [routerLink]="['/country', c.cca3]"
+            class="block rounded-lg border p-3 hover:opacity-90"
+            [ngClass]="uiColors.border.subtleLight + ' ' + uiColors.text.primary"
+          >
+            <span class="font-medium">{{ c.name.common }}</span>
+            <span class="opacity-70"> · {{ c.region }}</span>
+            @if (c.capital?.[0]) {
+              <span class="opacity-70"> · {{ c.capital?.[0] }}</span>
+            }
+            <span class="opacity-70"> · {{ c.population | number }}</span>
+          </a>
+        </li>
+      }
+    </ul>
+  }
+</div>

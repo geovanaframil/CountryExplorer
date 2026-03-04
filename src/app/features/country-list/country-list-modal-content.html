@@ -1,0 +1,88 @@
+<div class="flex flex-col h-full min-h-0">
+  <!-- Busca e filtro -->
+  <div
+    class="shrink-0 flex flex-wrap gap-3 items-center px-6 py-4 border-b"
+    [ngClass]="uiColors.border.subtleOpacity"
+  >
+    <input
+      type="search"
+      placeholder="Buscar por nome..."
+      class="rounded-lg border px-3 py-2 min-w-[180px] bg-slate-800/80 text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/40"
+      [ngClass]="uiColors.border.subtleOpacity"
+      [value]="searchTerm()"
+      (input)="onSearchInput($any($event.target).value)"
+    />
+    <app-ui-dropdown
+      [options]="regionOptions"
+      [value]="regionFilter()"
+      placeholder="Todas as regiões"
+      (valueChange)="onRegionChange($event)"
+    />
+  </div>
+
+  <!-- Área rolável para lazy loading -->
+  <div
+    #scrollContainer
+    class="flex-1 overflow-y-auto overflow-x-hidden px-6 py-4 min-h-0"
+    (scroll)="onScroll()"
+  >
+    @if (loading()) {
+      <p
+        [ngClass]="uiTypography.body.base + ' ' + uiColors.text.secondary"
+      >
+        Carregando países…
+      </p>
+    }
+
+    @if (hasError()) {
+      <p class="text-rose-300" [ngClass]="uiTypography.body.base">
+        {{ error() }}
+      </p>
+    }
+
+    @if (isEmpty()) {
+      <p
+        [ngClass]="uiTypography.body.base + ' ' + uiColors.text.secondary"
+      >
+        Nenhum país encontrado.
+      </p>
+    }
+
+    @if (!loading() && !error() && visibleCountries().length > 0) {
+      <ul class="space-y-2 list-none pl-0">
+        @for (c of visibleCountries(); track c.cca3) {
+          <li>
+            <a
+              [routerLink]="['/country', c.cca3]"
+              class="country-card block rounded-xl border p-3 transition-all duration-200 cursor-pointer"
+              [ngClass]="
+                uiColors.border.subtleOpacity +
+                ' ' +
+                uiColors.text.primary +
+                ' bg-slate-800/40 hover:bg-slate-800/80 hover:border-emerald-500/40 hover:scale-[1.02] hover:shadow-[0_0_24px_rgba(34,197,94,0.15)]'
+              "
+              (mouseenter)="onCountryCardMouseEnter()"
+            >
+              <span class="font-medium">{{ c.name.common }}</span>
+              <span class="opacity-70"> · {{ c.region }}</span>
+              @if (c.capital?.[0]) {
+                <span class="opacity-70"> · {{ c.capital?.[0] }}</span>
+              }
+              <span class="opacity-70"> · {{ c.population | number }}</span>
+            </a>
+          </li>
+        }
+      </ul>
+
+      @if (hasMore()) {
+        <p
+          #loadMoreSentinel
+          class="mt-4 text-center text-slate-500"
+          [ngClass]="uiTypography.body.muted"
+        >
+          Role para carregar mais…
+        </p>
+      }
+    }
+  </div>
+</div>
